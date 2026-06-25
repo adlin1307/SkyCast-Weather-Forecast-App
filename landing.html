@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyCast</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="landing.css">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌦️</text></svg>">
+</head>
+<body class="landing-body">
+
+    <section class="hero">
+
+        <!-- Weather effects -->
+        <div class="hero-effects" id="hero-effects" aria-hidden="true">
+            <div class="sun-glow  hero-sun-glow"></div>
+            <div class="moon-glow hero-moon-glow"></div>
+            <div class="cloud cloud1"></div>
+            <div class="cloud cloud2"></div>
+            <div class="cloud cloud3"></div>
+            <div class="cloud cloud-mid1"></div>
+            <div class="cloud cloud-mid2"></div>
+            <div class="rain-glow"></div>
+            <div class="rain hero-rain" id="hero-rain"></div>
+            <div class="snow hero-snow" id="hero-snow"></div>
+            <div class="thunder-flash" id="thunder-flash"></div>
+        </div>
+
+        <div class="hero-atmosphere" aria-hidden="true"></div>
+
+        <!-- Content -->
+        <div class="hero-content">
+
+            <!-- Badge -->
+            <p class="hero-eyebrow" aria-label="Live Worldwide Weather">
+                🌍 LIVE WORLDWIDE WEATHER
+            </p>
+
+            <!-- Header -->
+            <h1 class="hero-heading">
+                <span class="hero-heading-sky">Sky</span><span class="hero-heading-cast">Cast</span>
+            </h1>
+
+            <p class="hero-subheading">
+                Track weather conditions, forecasts and atmospheric changes anywhere on Earth.
+            </p>
+
+            <div class="weather-status" aria-live="polite" aria-label="Current weather preview">
+                <span class="status-label" aria-hidden="true">LIVE CONDITIONS</span>
+                <div class="status-row">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <span class="status-text" id="status-text">☀️ Clear Sky</span>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="pill-row" aria-label="App features">
+                <span class="pill">🌍 Interactive Map</span>
+                <span class="pill">📊 Smart Forecasts</span>
+                <span class="pill">✨ Live Effects</span>
+                <span class="pill">⚙️ Personalized</span>
+            </div>
+
+            <a href="index.html" class="enter-btn" aria-label="Open SkyCast">
+                Launch SkyCast
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+
+        </div>
+
+    </section>
+
+    <script src="landing.js"></script>
+</body>
+</html>
