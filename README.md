@@ -1,5 +1,9 @@
 # SkyCast - Weather Forecast App
 
+🌐 **Live Demo:** [Open SkyCast](https://adlin1307.github.io/SkyCast-Weather-Forecast-App/)
+
+---
+
 ## Intern Details
 
 - **Name:** Adlin A
