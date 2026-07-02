@@ -2280,7 +2280,7 @@ const dashboardBtn = document.getElementById("dashboard-btn");
 
 if (landingBtn) {
     landingBtn.addEventListener("click", () => {
-        window.location.href = "landing.html";
+        window.location.href = "index.html";
     });
 }
 

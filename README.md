@@ -80,7 +80,7 @@ Weather-Forecast-App/
 │   └── week-ahead.png
 │
 ├── index.html
-├── landing.html
+├── dashboard.html
 ├── style.css
 ├── landing.css
 ├── script.js

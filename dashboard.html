@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>SkyCast</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌦️</text></svg>">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+</head>
+
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header class="header">
+
+    <div class="header-top">
+
+        <div class="brand">
+            <div class="brand-logo-row">
+                <img
+                    src="https://api.iconify.design/meteocons/thunderstorms-day-fill.svg?color=%2338bdf8"
+                    class="brand-icon-img"
+                    alt="SkyCast weather icon"
+                    width="96"
+                    height="96"
+                >
+                <h1 class="hero-title">
+                    <span class="sky">Sky</span><span class="cast">Cast</span>
+                </h1>
+            </div>
+            <p class="brand-sub">Live Worldwide Weather</p>
+        </div>
+
+        <button id="settings-btn" aria-label="Open settings">
+            <i class="fas fa-gear"></i>
+        </button>
+
+    </div>
+
+</header>
+
+    <div class="search-header">
+        <h2 class="search-heading">Find Weather Anywhere</h2>
+        <p class="search-subheading">Search over 200,000+ cities worldwide</p>
+    </div>
+    <!-- Search Section -->
+    <section class="search-section">
+
+        <div id="search-input-wrap">
+            <input
+                type="text"
+                id="city-input"
+                placeholder="Enter a city name..."
+                autocomplete="off"
+            >
+            <div id="autocomplete-dropdown" class="autocomplete-dropdown" role="listbox" aria-label="City suggestions"></div>
+        </div>
+
+        <button id="search-btn">
+    <i class="fas fa-magnifying-glass"></i>
+    Search
+</button>
+
+    </section>
+    
+    <div id="recent-search-chips"></div>
+    <!-- Weather Dashboard -->
+    <section class="weather-card">
+        <div id="weather-effects"></div>
+        <div class="weather-top">
+
+            <div>
+                <h2 class="city-heading">
+    <i class="fas fa-location-dot"></i>
+    <span id="city-name">Your Location</span>
+</h2>
+                <p id="date-time">
+                    Date & Time
+                </p>
+                <p id="last-updated">
+    <i class="fas fa-arrows-rotate"></i>
+    Waiting for weather data
+</p>
+            </div>
+            
+            <div class="temperature-toggle">
+
+                <button id="celsius-btn" class="active-unit">
+    °C
+</button>
+
+<button id="fahrenheit-btn">
+    °F
+</button>
+
+            </div>
+
+        </div>
+        <!-- Temperature Display -->
+        <div class="weather-main">
+
+    <div class="temp-row">
+
+        <iconify-icon
+    id="weather-icon"
+    class="weather-icon"
+    icon="meteocons:clear-day-fill">
+</iconify-icon>
+
+        <h1 id="temperature">
+            --
+        </h1>
+
+    </div>
+
+    <p id="weather-condition">
+        Allow location access or search for a city
+    </p>
+
+    <p id="feels-like">
+        Feels Like --
+    </p>
+    <p id="weather-message"></p>
+    <div id="weather-status-chip" class="weather-status-chip" style="display:none;"></div>
+
+</div>
+        <!-- Weather details -->
+        <div class="weather-details">
+
+    <div class="detail-card">
+
+        <i class="fas fa-droplet"></i>
+
+        <h3 id="humidity-label">Humidity</h3>
+
+        <p id="humidity">
+            --
+        </p>
+
+    </div>
+
+    <div class="detail-card">
+
+        <i class="fas fa-wind"></i>
+
+        <h3 id="wind-label">Wind Speed</h3>
+
+        <p id="wind-speed">
+            --
+        </p>
+
+    </div>
+
+    <div class="detail-card">
+
+        <i class="fas fa-gauge-high"></i>
+
+        <h3 id="pressure-label">Pressure</h3>
+
+        <p id="pressure">
+            --
+        </p>
+
+    </div>
+
+    <div class="detail-card">
+
+        <i class="fas fa-eye"></i>
+
+        <h3>Visibility</h3>
+
+        <p id="visibility">
+            --
+        </p>
+
+    </div>
+    <div class="detail-card">
+
+    <i class="fas fa-sun"></i>
+
+    <h3>UV Index</h3>
+
+    <p id="uv-index">
+        --
+    </p>
+
+</div>
+<div class="detail-card">
+
+    <i class="fas fa-lungs"></i>
+
+    <h3>Air Quality</h3>
+
+    <p id="air-quality">
+        --
+    </p>
+
+</div>
+
+</div>
+<!-- Sunrise & Sunset -->
+<div class="sun-times">
+
+    <div class="sun-item">
+
+        <iconify-icon
+    icon="meteocons:sunrise-fill"
+    class="sunrise-icon">
+</iconify-icon>
+
+        <div>
+
+            <span class="sun-label">
+                Sunrise
+            </span>
+
+            <p id="sunrise">
+                --
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="sun-divider"></div>
+
+    <div class="sun-item">
+
+        <iconify-icon
+    icon="mdi:moon-waning-crescent"
+    class="sunset-icon">
+</iconify-icon>
+
+        <div>
+
+            <span class="sun-label">
+                Sunset
+            </span>
+
+            <p id="sunset">
+                --
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+    </section>
+
+    <section class="bottom-section">
+        <!-- Forecast -->
+        <div class="forecast-card">
+
+            <h2 class="section-title">
+                <i class="fas fa-calendar-week section-title-icon"></i> The Week Ahead
+            </h2>
+            <p class="forecast-hint">Click a day to view detailed forecast</p>
+
+            <div id="forecast-container">
+                <div class="forecast-item">
+    <p>Wed</p>
+    <i class="fas fa-sun"></i>
+    <span>33°C</span>
+</div>
+
+<div class="forecast-item">
+    <p>Thu</p>
+    <i class="fas fa-cloud-rain"></i>
+    <span>30°C</span>
+</div>
+
+<div class="forecast-item">
+    <p>Fri</p>
+    <i class="fas fa-cloud"></i>
+    <span>31°C</span>
+</div>
+
+<div class="forecast-item">
+    <p>Sat</p>
+    <i class="fas fa-sun"></i>
+    <span>34°C</span>
+</div>
+
+<div class="forecast-item">
+    <p>Sun</p>
+    <i class="fas fa-bolt"></i>
+    <span>29°C</span>
+</div>
+
+            </div>
+
+        </div>
+        <!-- Weather info -->
+        <div class="right-column">
+
+    <div class="info-card">
+
+        <h2><i class="fas fa-coffee info-card-icon"></i> Today's Moment</h2>
+
+<div id="todays-moment">
+
+    <h3 id="moment-title"></h3>
+
+    <p id="moment-text"></p>
+
+</div>
+
+    </div>
+
+    <div class="info-card">
+
+        <h2><i class="fas fa-lightbulb info-card-icon"></i> Did You Know?</h2>
+
+        <div id="weather-fact">
+
+             Lightning is hotter than the Sun's surface.
+
+        </div>
+
+    </div>
+
+</div>
+
+    </section>
+
+    <div id="error-message">
+
+    </div>
+<!-- Map -->
+<section class="map-card">
+
+    <h2 class="section-title">
+        <i class="fas fa-earth-americas section-title-icon"></i> Global Weather Map
+    </h2>
+    <p class="map-hint">
+    <i class="fas fa-hand-pointer"></i> Click any location to explore its weather
+</p>
+
+    <div id="weather-map"></div>
+
+</section>
+</div>
+<!-- Hourly Forecast -->
+<div class="modal" id="hourly-modal">
+
+    <div class="modal-content">
+
+        <button id="close-modal" aria-label="Close">
+            <i class="fas fa-xmark"></i>
+        </button>
+
+        <h2>Hourly Forecast</h2>
+        <div id="hourly-graph"></div>
+        <div id="hourly-insights"></div>
+        <div id="hourly-tip"></div>
+
+    </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-brand">
+        <i class="fas fa-cloud-sun footer-brand-icon"></i>
+        <span class="footer-name"><span class="sky">Sky</span><span class="cast">Cast</span></span>
+    </div>
+    <p class="footer-tagline">Weather made simple, beautiful and global.</p>
+    <p class="footer-sub">© 2026 SkyCast &nbsp;·&nbsp; Powered by OpenWeatherMap</p>
+</footer>
+
+<!-- Settings -->
+<div class="settings-modal" id="settings-modal">
+
+    <div class="settings-content">
+
+        <div class="settings-header">
+            <h2><i class="fas fa-sliders"></i> Settings</h2>
+            <button id="close-settings" aria-label="Close settings"><i class="fas fa-xmark"></i></button>
+        </div>
+
+        <div class="settings-rows">
+
+        <div class="settings-section-label">Appearance</div>
+        <div class="setting-row">
+    <span><i class="fas fa-moon setting-row-icon"></i> Theme</span>
+    <div class="setting-control">
+    <span id="theme-status">Dark</span>
+    <label class="switch">
+        <input type="checkbox" id="theme-toggle">
+        <span class="slider"></span>
+    </label>
+</div>
+</div>
+
+        <div class="settings-section-label">Preferences</div>
+        <div class="setting-row">
+    <span><i class="fas fa-temperature-half setting-row-icon"></i> Temperature Units</span>
+    <div class="setting-control">
+    <span id="unit-status">°C</span>
+    <label class="switch">
+        <input type="checkbox" id="unit-toggle">
+        <span class="slider"></span>
+    </label>
+</div>
+</div>
+<div class="setting-row">
+    <label for="effects-checkbox"><i class="fas fa-wand-magic-sparkles setting-row-icon"></i> Weather Effects</label>
+    <div class="setting-control">
+    <span id="effects-status">On</span>
+    <input
+        type="checkbox"
+        id="effects-checkbox"
+        checked
+    >
+</div>
+</div>
+<div class="setting-row">
+    <span><i class="fas fa-map setting-row-icon"></i> Map Style</span>
+    <div class="setting-control">
+    <span id="map-status">Standard</span>
+    <label class="switch">
+        <input type="checkbox" id="map-toggle">
+        <span class="slider"></span>
+    </label>
+</div>
+</div>
+
+        </div>
+
+        <div class="setting-group">
+
+            <button id="landing-btn">
+                <i class="fas fa-rocket"></i> Return To Landing Page
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
+
+</body>
+
+</html>
